@@ -154,7 +154,6 @@ void download_dlib(char *ver){
    if (webr == NULL) {
         perror("Error running command with popen");
         exit(1);
-    
     }
     int status = pclose(webr);        
     if (status == -1) {
@@ -202,8 +201,20 @@ return 1;}
     id2[2] = '\0';
     snprintf(cmd, sizeof(cmd), "cp usr/lib/debug/.build-id/%s/%s.debug ../debuginfo",id2,bid+2);
     if(run(cmd))return 1;
-    chdir("..");
-    rmdir("./tmp");
+    if (chdir("..") != 0) {
+       
+        perror("Error changing directory");
+        
+        return 1; 
+    }
+     snprintf(cmd, sizeof(cmd), "rm -rf ./tmp");
+    if (run(cmd)) {
+        fprintf(stderr, "failed removing tmp dir\n");
+        return 1;
+        
+    }
+   
+   
 
 
     return 0;
