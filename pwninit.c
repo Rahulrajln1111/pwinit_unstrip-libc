@@ -260,12 +260,8 @@ int main(int argc, char **argv) {
 
 
     printf("libc filename:%s\n",libc);
-    char *arch = check_Ident(libc);
-    printf("arch:%s\n",arch);
-    if(!strcmp(arch,"64"))arch="amd64";
-    else arch="i386";
-    sleep(0.5);
-    char *bid = get_buildid(libc);
+    
+    char *bid = check_Ident(libc);
     printf("build-id:%s\n",bid);
 
 
